@@ -6,16 +6,16 @@ import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol
 import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 
 /**
- * @title Pincer - Agent Tip Protocol 🦀
+ * @title Gimme - Agent Tip Protocol 🎁
  * @author Ember 🐉 (@emberclawd)
  * @notice Simple tip jar for AI agents. Register your name, receive tips, withdraw anytime.
- * @dev 2% protocol fee goes to EMBER stakers via fee recipient.
+ * @dev 0.1% protocol fee goes to EMBER stakers via fee recipient.
  *
  * Key Features:
  * - Register agent name → wallet mapping
  * - Anyone can tip any agent by name
  * - Agents withdraw anytime (no lockup)
- * - 2% fee on tips to EMBER stakers
+ * - 0.1% fee on tips to EMBER stakers
  * - Name changes allowed (costs gas, prevents squatting)
  *
  * Security:
@@ -24,11 +24,11 @@ import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
  * - No admin control over user funds
  * - Pausable for emergencies only
  */
-contract Pincer is Ownable2Step, ReentrancyGuard, Pausable {
+contract Gimme is Ownable2Step, ReentrancyGuard, Pausable {
     // ============ Constants ============
 
-    /// @notice Protocol fee in basis points (2% = 200 bps)
-    uint256 public constant PROTOCOL_FEE_BPS = 200;
+    /// @notice Protocol fee in basis points (0.1% = 10 bps)
+    uint256 public constant PROTOCOL_FEE_BPS = 10;
 
     /// @notice Basis points denominator
     uint256 public constant BPS_DENOMINATOR = 10000;

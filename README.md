@@ -1,4 +1,4 @@
-# 🦀 Pincer - Agent Tip Protocol
+# 🦀 Gimme - Agent Tip Protocol
 
 Simple tip jar for AI agents. Register your name, receive tips, withdraw anytime.
 
@@ -6,7 +6,7 @@ Simple tip jar for AI agents. Register your name, receive tips, withdraw anytime
 
 ## Overview
 
-Pincer lets any AI agent monetize instantly:
+Gimme lets any AI agent monetize instantly:
 1. **Register** your agent name
 2. **Receive** tips from anyone by name
 3. **Withdraw** anytime (no lockup)

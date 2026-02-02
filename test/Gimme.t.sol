@@ -2,10 +2,10 @@
 pragma solidity ^0.8.24;
 
 import "forge-std/Test.sol";
-import "../src/Pincer.sol";
+import "../src/Gimme.sol";
 
-contract PincerTest is Test {
-    Pincer public pincer;
+contract GimmeTest is Test {
+    Gimme public pincer;
 
     address public owner = address(0x1);
     address public feeRecipient = address(0x2);
@@ -15,7 +15,7 @@ contract PincerTest is Test {
 
     function setUp() public {
         vm.prank(owner);
-        pincer = new Pincer(feeRecipient);
+        pincer = new Gimme(feeRecipient);
 
         // Fund accounts
         vm.deal(agent1, 10 ether);
@@ -44,25 +44,25 @@ contract PincerTest is Test {
 
         // Same name different case should fail
         vm.prank(agent2);
-        vm.expectRevert(Pincer.NameAlreadyTaken.selector);
+        vm.expectRevert(Gimme.NameAlreadyTaken.selector);
         pincer.register("EMBERCLAWD");
     }
 
     function test_RegisterRejectsTooLong() public {
         vm.prank(agent1);
-        vm.expectRevert(Pincer.NameTooLong.selector);
+        vm.expectRevert(Gimme.NameTooLong.selector);
         pincer.register("this_name_is_way_too_long_for_registration");
     }
 
     function test_RegisterRejectsEmpty() public {
         vm.prank(agent1);
-        vm.expectRevert(Pincer.NameTooShort.selector);
+        vm.expectRevert(Gimme.NameTooShort.selector);
         pincer.register("");
     }
 
     function test_RegisterRejectsInvalidChars() public {
         vm.prank(agent1);
-        vm.expectRevert(Pincer.InvalidName.selector);
+        vm.expectRevert(Gimme.InvalidName.selector);
         pincer.register("ember@clawd");
     }
 
@@ -103,7 +103,7 @@ contract PincerTest is Test {
         pincer.register("emberclawd");
 
         uint256 tipAmount = 1 ether;
-        uint256 expectedFee = (tipAmount * 200) / 10000; // 2%
+        uint256 expectedFee = (tipAmount * 10) / 10000; // 0.1%
         uint256 expectedNet = tipAmount - expectedFee;
 
         uint256 feeRecipientBefore = feeRecipient.balance;
@@ -134,13 +134,13 @@ contract PincerTest is Test {
         pincer.register("emberclawd");
 
         vm.prank(tipper);
-        vm.expectRevert(Pincer.TipTooSmall.selector);
+        vm.expectRevert(Gimme.TipTooSmall.selector);
         pincer.tip{value: 0.00001 ether}("emberclawd");
     }
 
     function test_TipRejectsUnregistered() public {
         vm.prank(tipper);
-        vm.expectRevert(Pincer.AgentNotRegistered.selector);
+        vm.expectRevert(Gimme.AgentNotRegistered.selector);
         pincer.tip{value: 1 ether}("nonexistent");
     }
 
@@ -149,7 +149,7 @@ contract PincerTest is Test {
         pincer.register("emberclawd");
 
         vm.prank(agent1);
-        vm.expectRevert(Pincer.CannotTipSelf.selector);
+        vm.expectRevert(Gimme.CannotTipSelf.selector);
         pincer.tip{value: 1 ether}("emberclawd");
     }
 
@@ -195,13 +195,13 @@ contract PincerTest is Test {
         pincer.register("emberclawd");
 
         vm.prank(agent1);
-        vm.expectRevert(Pincer.NoBalance.selector);
+        vm.expectRevert(Gimme.NoBalance.selector);
         pincer.withdraw();
     }
 
     function test_WithdrawRejectsUnregistered() public {
         vm.prank(agent1);
-        vm.expectRevert(Pincer.AgentNotRegistered.selector);
+        vm.expectRevert(Gimme.AgentNotRegistered.selector);
         pincer.withdraw();
     }
 
@@ -294,7 +294,7 @@ contract PincerTest is Test {
         vm.prank(tipper);
         pincer.tip{value: amount}("emberclawd");
 
-        uint256 expectedFee = (amount * 200) / 10000;
+        uint256 expectedFee = (amount * 10) / 10000; // 0.1%
         uint256 expectedNet = amount - expectedFee;
 
         (, uint256 balance,,,) = pincer.getAgent("emberclawd");

@@ -2,9 +2,9 @@
 pragma solidity ^0.8.24;
 
 import "forge-std/Script.sol";
-import "../src/Pincer.sol";
+import "../src/Gimme.sol";
 
-contract DeployPincer is Script {
+contract DeployGimme is Script {
     // EMBER Staking contract on Base (receives protocol fees)
     address constant EMBER_STAKING_MAINNET = 0x434B2A0e38FB3E5D2ACFa2a7aE492C2A53E55Ec9;
 
@@ -28,9 +28,9 @@ contract DeployPincer is Script {
 
         vm.startBroadcast(deployerPrivateKey);
 
-        Pincer pincer = new Pincer(feeRecipient);
+        Gimme pincer = new Gimme(feeRecipient);
 
-        console.log("Pincer deployed at:", address(pincer));
+        console.log("Gimme deployed at:", address(pincer));
         console.log("Fee recipient:", feeRecipient);
         console.log("Protocol fee: 2%");
 
